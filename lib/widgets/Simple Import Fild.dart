@@ -6,8 +6,9 @@ class impoetFild extends StatefulWidget {
   final TextEditingController controller;
   final String title;
   final String hintText;
+  final IconData? iconData;
 
-  const impoetFild({super.key, required this.controller, required this.title, required this.hintText});
+  const impoetFild({super.key, required this.controller, required this.title, required this.hintText, this.iconData, required IconData IconData});
 
   @override
   State<impoetFild> createState() => _impoetFildState();
@@ -35,7 +36,7 @@ class _impoetFildState extends State<impoetFild> {
           decoration: InputDecoration(
             hintText: widget.hintText,
             hintStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: taxtLight),
-            suffix: const Icon(Icons.attach_money, color: taxtBlack,),
+            suffixIcon: widget.iconData != null ? Icon(widget.iconData, color: taxtBlack):Text(""),
             filled: true,
             fillColor: containercolor,
             border: OutlineInputBorder(
@@ -63,8 +64,19 @@ class _impoetFildState extends State<impoetFild> {
             });
           },
 
-          validator: (){
 
+          onSaved: (value){
+            widget.controller.text = value.toString();
+            setState(() {
+
+            });
+          },
+
+          validator: (value){
+            if(value == null || value.isEmpty){
+              return "Please Enter the valid amount";
+            }
+            return null;
           },
         ),
       ],
